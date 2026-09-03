@@ -147,7 +147,7 @@ export default function Home() {
     <main>
       <header className="site-header">
         <a className="brand" href="#top" aria-label="Barrio Web Studio home">
-          <span className="brand-mark">B</span><span>Barrio Web <em>Studio</em></span>
+          <img className="logo-mark" src="/logo-tamale.png" alt="" /><span>Barrio Web <em>Studio</em></span>
         </a>
         <nav className={menuOpen ? 'nav open' : 'nav'} aria-label="Main navigation">
           {['servicios', 'ejemplos', 'proceso'].map((id, i) => (
@@ -231,7 +231,7 @@ export default function Home() {
           <div className="booking-contact"><span>hola@barriowebstudio.com</span><span>(602) 555-0148</span></div><small>{t.fake}</small>
         </div>
         <div className="booking-card">
-          <div className="booking-card-head"><span className="brand-mark">B</span><div><strong>{t.selected}</strong><small>Barrio Web Studio · 30 min</small></div></div>
+          <div className="booking-card-head"><img className="logo-mark booking-logo" src="/logo-tamale.png" alt="Barrio Web Studio logo" /><div><strong>{t.selected}</strong><small>Barrio Web Studio · 30 min</small></div></div>
           <label>{t.dateLabel}</label>
           <div className="date-grid">{dates.map((date, i) => (
             <button className={dateIndex === i ? 'selected' : ''} key={date.toISOString()} onClick={() => setDateIndex(i)}>
@@ -247,7 +247,7 @@ export default function Home() {
       </section>
 
       <footer>
-        <a className="brand" href="#top"><span className="brand-mark">B</span><span>Barrio Web <em>Studio</em></span></a>
+        <a className="brand" href="#top"><img className="logo-mark" src="/logo-tamale.png" alt="" /><span>Barrio Web <em>Studio</em></span></a>
         <p>{t.footer}</p><div><a href="mailto:hola@barriowebstudio.com">hola@barriowebstudio.com</a><span>© 2026</span></div>
       </footer>
     </main>

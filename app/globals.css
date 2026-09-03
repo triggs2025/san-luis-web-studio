@@ -36,6 +36,8 @@ button { font: inherit; }
 .site-header { height: 78px; padding: 0 clamp(22px, 5vw, 72px); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(43,24,50,.18); position: sticky; top: 0; z-index: 30; background: rgba(255,249,237,.92); backdrop-filter: blur(12px); }
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 900; letter-spacing: -.04em; font-size: 18px; white-space: nowrap; }
 .brand em { color: var(--primary); font-family: var(--font-heading); font-weight: 500; }
+.logo-mark { width: 52px; height: 52px; object-fit: contain; flex: 0 0 auto; filter: drop-shadow(2px 2px 0 rgba(43,24,50,.14)); }
+.booking-logo { width: 58px; height: 58px; }
 .brand-mark { width: 35px; height: 35px; border-radius: 50% 50% 44% 56% / 56% 40% 60% 44%; display: grid; place-items: center; background: var(--primary); color: white; font-family: var(--font-heading); font-weight: 800; transform: rotate(-5deg); }
 .nav { display: flex; gap: 34px; font-size: 13px; font-weight: 800; }
 .nav a:hover { color: var(--primary); }
@@ -165,6 +167,7 @@ footer > div { display: flex; flex-direction: column; align-items: flex-end; gap
 @media (max-width: 650px) {
   .site-header { height: 68px; }
   .brand { font-size: 15px; }
+  .logo-mark { width: 44px; height: 44px; }
   .brand-mark { width: 31px; height: 31px; }
   .nav { top: 68px; }
   .hero { min-height: auto; padding-top: 65px; gap: 25px; }

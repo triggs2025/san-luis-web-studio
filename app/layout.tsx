@@ -17,6 +17,10 @@ export const metadata: Metadata = {
     description: 'Sitios web bilingües con corazón local.',
     images: ['/og.png'],
   },
+  icons: {
+    icon: '/logo-tamale.png',
+    apple: '/logo-tamale.png',
+  },
 };
 
 export default function RootLayout({
