@@ -1,11 +1,10 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   ArrowRight,
   CalendarDays,
   Check,
-  Disc3,
   Globe2,
   Menu,
   MessageCircle,
@@ -24,10 +23,20 @@ const copy = {
     cta: 'Agenda tu consulta gratis',
     examples: 'Ver ejemplos',
     trust: ['En español e inglés', 'Listo para celular', 'Diseño hecho a tu medida'],
+    mock: {
+      url: 'www.tunegocio.com',
+      nav: ['Cortes', 'Barba', 'Visítanos'],
+      eyebrow: 'PRECIOS JUSTOS · SIN ESPERAS',
+      head: ['Tu mejor corte.', 'Cada semana.'],
+      cta: 'Ver horarios →',
+      badge: ['CITAS EL', 'MISMO DÍA'],
+      note: 'Hecho para tu comunidad',
+    },
     workEyebrow: 'TRABAJO DE MUESTRA',
     workTitle: 'Imagina tu negocio aquí.',
     workSub: 'Conceptos creados para mostrar cómo podemos convertir la esencia de un negocio local en una experiencia digital que vende.',
     view: 'Ver concepto',
+    projectLines: ['Pan dulce. Café. Comunidad.', 'Sabor que se siente como casa.', 'Detalles que hablan por ti.'],
     serviceEyebrow: 'LO QUE HACEMOS',
     serviceTitle: 'Todo lo que necesitas para empezar bien.',
     services: [
@@ -52,6 +61,7 @@ const copy = {
     selected: 'Tu consulta',
     review: '“Nos explicó todo sin palabras complicadas y ahora nuestros clientes encuentran el menú en segundos.”',
     reviewBy: '— Elena, negocio familiar',
+    reviewNote: 'Testimonio de ejemplo',
     footer: 'Diseño web con corazón local.',
     fake: 'Datos de demostración — reemplázalos antes de publicar',
   },
@@ -64,10 +74,20 @@ const copy = {
     cta: 'Book your free consultation',
     examples: 'See examples',
     trust: ['Spanish & English', 'Mobile-ready', 'Designed around your business'],
+    mock: {
+      url: 'www.yourbusiness.com',
+      nav: ['Cuts', 'Beard', 'Visit us'],
+      eyebrow: 'FAIR PRICES · NO WAITING',
+      head: ['Your best cut.', 'Every week.'],
+      cta: 'See hours →',
+      badge: ['SAME-DAY', 'BOOKING'],
+      note: 'Made for your community',
+    },
     workEyebrow: 'SAMPLE WORK',
     workTitle: 'Picture your business here.',
     workSub: 'Concepts created to show how we turn the spirit of a local business into a digital experience that sells.',
     view: 'View concept',
+    projectLines: ['Sweet bread. Coffee. Community.', 'Flavor that feels like home.', 'Details that speak for you.'],
     serviceEyebrow: 'WHAT WE DO',
     serviceTitle: 'Everything you need to start strong.',
     services: [
@@ -92,16 +112,124 @@ const copy = {
     selected: 'Your consultation',
     review: '“Everything was explained without complicated words, and now our customers find the menu in seconds.”',
     reviewBy: '— Elena, family business owner',
+    reviewNote: 'Sample testimonial',
     footer: 'Web design with a local heart.',
     fake: 'Demo contact details — replace before publishing',
   },
 };
 
 const projects = [
-  { name: 'La Estrella', type: 'PANADERÍA · BAKERY', theme: 'bakery', line: 'Pan dulce. Café. Comunidad.' },
-  { name: 'Sol y Sal', type: 'TAQUERÍA · TAQUERIA', theme: 'tacos', line: 'Sabor que se siente como casa.' },
-  { name: 'Flores Marisol', type: 'FLORERÍA · FLORIST', theme: 'flowers', line: 'Detalles que hablan por ti.' },
+  { name: 'La Estrella', type: 'PANADERÍA · BAKERY', theme: 'bakery' },
+  { name: 'Sol y Sal', type: 'TAQUERÍA · TAQUERIA', theme: 'tacos' },
+  { name: 'Flores Marisol', type: 'FLORERÍA · FLORIST', theme: 'flowers' },
 ];
+
+function Splash({ className }: { className: string }) {
+  return (
+    <svg className={`splash ${className}`} viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+      <path d="M60 8c3 14 2 26-3 37-2 4-8 2-7-2 3-12 6-23 10-35z" fill="#bd3f27" />
+      <path d="M104 34c-11 9-22 15-34 18-4 1-6-6-2-8 12-4 23-7 36-10z" fill="#f2b233" />
+      <path d="M16 30c9 11 19 19 30 24 4 2 1 8-3 7-12-5-21-11-27-31z" fill="#1e50a2" />
+    </svg>
+  );
+}
+
+function scallopPath(cx: number, cy: number, r: number, n: number) {
+  const pts = Array.from({ length: n }, (_, i) => {
+    const a = (i / n) * Math.PI * 2 - Math.PI / 2;
+    return [cx + Math.cos(a) * r, cy + Math.sin(a) * r] as const;
+  });
+  const rr = r * Math.sin(Math.PI / n) * 1.08;
+  return (
+    pts
+      .map(([x, y], i) => {
+        const [nx, ny] = pts[(i + 1) % n];
+        const move = i === 0 ? `M${x.toFixed(1)} ${y.toFixed(1)}` : '';
+        return `${move}A${rr.toFixed(1)} ${rr.toFixed(1)} 0 0 1 ${nx.toFixed(1)} ${ny.toFixed(1)}`;
+      })
+      .join('') + 'Z'
+  );
+}
+
+function ConchaArt() {
+  return (
+    <svg className="project-art" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+      <circle cx="100" cy="112" r="82" fill="#e09a3c" stroke="#2b1832" strokeWidth="8" />
+      <path
+        d={scallopPath(100, 104, 58, 9)}
+        fill="#fffaf0"
+        stroke="#2b1832"
+        strokeWidth="7"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M54 86q46-19 92 0M48 110q52-21 104 0M58 134q42-17 84 0"
+        fill="none"
+        stroke="#2b1832"
+        strokeWidth="6"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function TacoArt() {
+  return (
+    <svg className="project-art" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+      <circle cx="64" cy="76" r="21" fill="#4f9d4f" stroke="#2b1832" strokeWidth="7" />
+      <circle cx="102" cy="66" r="21" fill="#bd3f27" stroke="#2b1832" strokeWidth="7" />
+      <circle cx="140" cy="78" r="19" fill="#fffaf0" stroke="#2b1832" strokeWidth="7" />
+      <path d="M22 92q78 94 156 0z" fill="#fdeec9" stroke="#2b1832" strokeWidth="8" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function FlowerArt() {
+  return (
+    <svg className="project-art" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+      <path d="M100 96v104" stroke="#3f8f3f" strokeWidth="12" strokeLinecap="round" fill="none" />
+      <path d="M100 178c30-4 46-24 46-48-28 0-46 20-46 48z" fill="#4f9d4f" stroke="#2b1832" strokeWidth="7" strokeLinejoin="round" />
+      {[0, 60, 120, 180, 240, 300].map((deg) => {
+        const r = (deg * Math.PI) / 180;
+        return (
+          <circle
+            key={deg}
+            cx={100 + Math.cos(r) * 44}
+            cy={96 + Math.sin(r) * 44}
+            r="28"
+            fill="#f2b233"
+            stroke="#2b1832"
+            strokeWidth="7"
+          />
+        );
+      })}
+      <circle cx="100" cy="96" r="26" fill="#1e50a2" stroke="#2b1832" strokeWidth="7" />
+    </svg>
+  );
+}
+
+const projectArt = [ConchaArt, TacoArt, FlowerArt];
+
+function BarberPole() {
+  return (
+    <svg className="pole-art" viewBox="0 0 120 214" aria-hidden="true" focusable="false">
+      <defs>
+        <clipPath id="barber-pole-clip">
+          <rect x="34" y="44" width="52" height="124" rx="26" />
+        </clipPath>
+      </defs>
+      <rect x="24" y="22" width="72" height="24" rx="12" fill="#f2b233" stroke="#2b1832" strokeWidth="7" />
+      <rect x="34" y="44" width="52" height="124" rx="26" fill="#fffaf0" stroke="#2b1832" strokeWidth="7" />
+      <g clipPath="url(#barber-pole-clip)">
+        {[60, 92, 124, 156, 188, 220, 252].map((y, i) => (
+          <path key={y} d={`M2 ${y}L118 ${y - 128}`} stroke={i % 2 ? '#1e50a2' : '#bd3f27'} strokeWidth="18" fill="none" />
+        ))}
+      </g>
+      <rect x="34" y="44" width="52" height="124" rx="26" fill="none" stroke="#2b1832" strokeWidth="7" />
+      <rect x="24" y="166" width="72" height="24" rx="12" fill="#f2b233" stroke="#2b1832" strokeWidth="7" />
+    </svg>
+  );
+}
 
 function getDates() {
   const dates: Date[] = [];
@@ -122,19 +250,23 @@ export default function Home() {
   const [time, setTime] = useState('10:00');
   const t = copy[lang];
 
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
+
   const bookingUrl = useMemo(() => {
     const start = new Date(dates[dateIndex]);
     const [hours, minutes] = time.split(':').map(Number);
     start.setHours(hours, minutes, 0, 0);
     const end = new Date(start.getTime() + 30 * 60 * 1000);
     const stamp = (d: Date) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-    const title = lang === 'es' ? 'Consulta gratuita — Barrio Web Studio' : 'Free consultation — Barrio Web Studio';
+    const title = lang === 'es' ? 'Consulta gratuita — San Luis Web Studio' : 'Free consultation — San Luis Web Studio';
     const details = lang === 'es'
       ? 'Consulta de 30 minutos para hablar sobre tu negocio y tu nueva página web. Agrega un enlace de Google Meet al guardar.'
       : 'A 30-minute consultation to talk about your business and new website. Add a Google Meet link when saving.';
     const params = new URLSearchParams({
       action: 'TEMPLATE', text: title, dates: `${stamp(start)}/${stamp(end)}`, details,
-      add: 'hola@barriowebstudio.com',
+      add: 'hola@sanluiswebstudio.com',
     });
     return `https://calendar.google.com/calendar/render?${params.toString()}`;
   }, [dateIndex, dates, lang, time]);
@@ -147,8 +279,8 @@ export default function Home() {
   return (
     <main>
       <header className="site-header">
-        <a className="brand" href="#top" aria-label="Barrio Web Studio home">
-          <img className="logo-mark" src="/logo-tamale.png" alt="" /><span>Barrio Web <em>Studio</em></span>
+        <a className="brand" href="#top" aria-label="San Luis Web Studio home">
+          <img className="logo-mark" src="/logo-tamale.png" alt="" /><span>San Luis Web <em>Studio</em></span>
         </a>
         <nav className={menuOpen ? 'nav open' : 'nav'} aria-label="Main navigation">
           {['servicios', 'ejemplos', 'proceso'].map((id, i) => (
@@ -163,6 +295,7 @@ export default function Home() {
       </header>
 
       <section className="hero" id="top">
+        <Splash className="hero-splash" />
         <div className="hero-copy">
           <p className="eyebrow"><Sparkles size={16} /> {t.eyebrow}</p>
           <h1>{t.hero}</h1>
@@ -176,24 +309,24 @@ export default function Home() {
         <div className="hero-art" aria-label="Preview of a colorful bilingual website">
           <div className="sunburst" />
           <div className="browser-card">
-            <div className="browser-top"><span /><span /><span /><b>www.tunegocio.com</b></div>
-            <div className="browser-body tire-site">
-              <div className="mini-nav"><strong>Llantas Fiesta</strong><span>Llantas &nbsp; Servicios &nbsp; Visítanos</span></div>
-              <p>PRECIOS JUSTOS · SERVICIO RÁPIDO</p>
-              <h2>Rueda seguro.<br /><i>Llega más lejos.</i></h2>
-              <button>Ver ofertas →</button>
-              <div className="tire-confetti" aria-hidden="true"><span>◆</span><span>✦</span><span>●</span><span>◆</span></div>
-              <div className="tire-visual" aria-hidden="true"><Disc3 /><span>OFERTAS<br />DE TEMPORADA</span></div>
+            <div className="browser-top"><span /><span /><span /><b>{t.mock.url}</b></div>
+            <div className="browser-body shop-site">
+              <div className="mini-nav"><strong>Barbería La Corona</strong><span>{t.mock.nav.join('   ')}</span></div>
+              <p>{t.mock.eyebrow}</p>
+              <h2>{t.mock.head[0]}<br /><i>{t.mock.head[1]}</i></h2>
+              <button>{t.mock.cta}</button>
+              <BarberPole />
+              <span className="shop-badge" aria-hidden="true">{t.mock.badge[0]}<br />{t.mock.badge[1]}</span>
             </div>
           </div>
-          <div className="floating-note"><Star size={16} fill="currentColor" /> Hecho para tu comunidad</div>
+          <div className="floating-note"><Star size={16} fill="currentColor" /> {t.mock.note}</div>
         </div>
       </section>
 
       <section className="portfolio section" id="ejemplos">
         <div className="section-heading">
           <div><p className="eyebrow">{t.workEyebrow}</p><h2>{t.workTitle}</h2></div>
-          <p>{t.workSub}</p>
+          <p style={{ position: 'relative' }}><Splash className="work-splash" />{t.workSub}</p>
         </div>
         <div className="project-grid">
           {projects.map((project, index) => (
@@ -201,10 +334,8 @@ export default function Home() {
               <div className="project-preview">
                 <div className="project-browser"><i /><i /><i /></div>
                 <div className="project-inner">
-                  <small>{project.type}</small><h3>{project.name}</h3><p>{project.line}</p>
-                  {index === 0 && <div className="bread-shapes">● ◒ ●</div>}
-                  {index === 1 && <div className="taco-shape">☀</div>}
-                  {index === 2 && <div className="flower-shape">✿</div>}
+                  <small>{project.type}</small><h3>{project.name}</h3><p>{t.projectLines[index]}</p>
+                  {projectArt[index] && projectArt[index]()}
                 </div>
               </div>
               <div className="project-meta"><span><strong>{project.name}</strong><small>{project.type}</small></span><button aria-label={`${t.view}: ${project.name}`}>↗</button></div>
@@ -224,16 +355,19 @@ export default function Home() {
       <section className="process section" id="proceso">
         <div className="section-heading centered"><div><p className="eyebrow">{t.processEyebrow}</p><h2>{t.processTitle}</h2></div></div>
         <div className="steps">{t.steps.map((step) => <article key={step[0]}><span>{step[0]}</span><h3>{step[1]}</h3><p>{step[2]}</p></article>)}</div>
-        <blockquote><MessageCircle /><p>{t.review}</p><cite>{t.reviewBy}</cite></blockquote>
+        <blockquote>
+          <MessageCircle /><p>{t.review}</p><cite>{t.reviewBy}</cite>
+          <div><span className="demo-flag">{t.reviewNote}</span></div>
+        </blockquote>
       </section>
 
       <section className="booking section" id="agenda">
         <div className="booking-copy">
           <p className="eyebrow"><CalendarDays size={16} /> {t.bookingEyebrow}</p><h2>{t.bookingTitle}</h2><p>{t.bookingSub}</p>
-          <div className="booking-contact"><span>hola@barriowebstudio.com</span><span>(602) 555-0148</span></div><small>{t.fake}</small>
+          <div className="booking-contact"><span>hola@sanluiswebstudio.com</span><span>(602) 555-0148</span></div><small>{t.fake}</small>
         </div>
         <div className="booking-card">
-          <div className="booking-card-head"><img className="logo-mark booking-logo" src="/logo-tamale.png" alt="Barrio Web Studio logo" /><div><strong>{t.selected}</strong><small>Barrio Web Studio · 30 min</small></div></div>
+          <div className="booking-card-head"><img className="logo-mark booking-logo" src="/logo-tamale.png" alt="San Luis Web Studio logo" /><div><strong>{t.selected}</strong><small>San Luis Web Studio · 30 min</small></div></div>
           <label>{t.dateLabel}</label>
           <div className="date-grid">{dates.map((date, i) => (
             <button className={dateIndex === i ? 'selected' : ''} key={date.toISOString()} onClick={() => setDateIndex(i)}>
@@ -249,8 +383,8 @@ export default function Home() {
       </section>
 
       <footer>
-        <a className="brand" href="#top"><img className="logo-mark" src="/logo-tamale.png" alt="" /><span>Barrio Web <em>Studio</em></span></a>
-        <p>{t.footer}</p><div><a href="mailto:hola@barriowebstudio.com">hola@barriowebstudio.com</a><span>© 2026</span></div>
+        <a className="brand" href="#top"><img className="logo-mark" src="/logo-tamale.png" alt="" /><span>San Luis Web <em>Studio</em></span></a>
+        <p>{t.footer}</p><div><a href="mailto:hola@sanluiswebstudio.com">hola@sanluiswebstudio.com</a><span>© 2026</span></div>
       </footer>
     </main>
   );
