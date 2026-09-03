@@ -72,8 +72,21 @@ h1 { font-size: clamp(54px,7vw,98px); max-width: 780px; }
 .browser-body h2 { color: #7a2932; font-size: clamp(33px,4vw,52px); position: relative; z-index: 2; }
 .browser-body h2 i { color: #bd3f27; }
 .browser-body button { margin-top: 25px; background: #1e50a2; color: white; border: 0; padding: 12px 17px; font-weight: 800; font-size: 10px; }
-.conchas { position: absolute; right: -36px; bottom: -30px; width: 190px; height: 190px; background: #dc6a46; border-radius: 50%; display: grid; place-items: center; font-size: 42px; color: #f9d38e; transform: rotate(-12deg); }
-.conchas span:nth-child(2) { font-size: 65px; }
+.tire-site { background: #f3b436; }
+.tire-site .mini-nav strong { color: #153f86; font-weight: 900; }
+.tire-site > p { color: #9d2d27; }
+.tire-site h2 { color: #2b1832; max-width: 340px; }
+.tire-site h2 i { color: #b93825; }
+.tire-site button { background: #153f86; position: relative; z-index: 3; }
+.tire-visual { position: absolute; right: 10px; bottom: -22px; width: 185px; height: 185px; display: grid; place-items: center; color: #2b1832; transform: rotate(7deg); }
+.tire-visual svg { position: absolute; width: 100%; height: 100%; stroke-width: 1.3; color: #2b1832; fill: #fff9ed; }
+.tire-visual span { position: relative; z-index: 2; text-align: center; font-size: 10px; line-height: 1.35; font-weight: 950; color: #fff9ed; background: #bd3f27; padding: 8px 10px; border-radius: 50%; transform: rotate(-7deg); }
+.tire-confetti { position: absolute; inset: 0; pointer-events: none; color: #1e50a2; font-size: 17px; }
+.tire-confetti span { position: absolute; }
+.tire-confetti span:nth-child(1) { top: 54px; right: 35px; color: #bd3f27; transform: rotate(18deg); }
+.tire-confetti span:nth-child(2) { top: 104px; right: 148px; color: #fff9ed; font-size: 24px; }
+.tire-confetti span:nth-child(3) { bottom: 38px; left: 46%; color: #1e50a2; }
+.tire-confetti span:nth-child(4) { bottom: 18px; left: 25px; color: #bd3f27; transform: rotate(35deg); }
 .floating-note { position: absolute; right: -15px; bottom: 45px; background: #1e50a2; color: white; padding: 13px 17px; font-weight: 900; font-size: 12px; transform: rotate(-3deg); display: flex; gap: 7px; box-shadow: 5px 5px 0 #2b1832; }
 
 .section { padding: 100px clamp(22px, 6vw, 90px); }

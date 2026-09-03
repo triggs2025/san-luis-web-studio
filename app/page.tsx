@@ -5,6 +5,7 @@ import {
   ArrowRight,
   CalendarDays,
   Check,
+  Disc3,
   Globe2,
   Menu,
   MessageCircle,
@@ -176,12 +177,13 @@ export default function Home() {
           <div className="sunburst" />
           <div className="browser-card">
             <div className="browser-top"><span /><span /><span /><b>www.tunegocio.com</b></div>
-            <div className="browser-body">
-              <div className="mini-nav"><strong>La Estrella</strong><span>Menú &nbsp; Historia &nbsp; Visítanos</span></div>
-              <p>DESDE 1998 · SINCE 1998</p>
-              <h2>Recién hecho.<br /><i>Siempre con cariño.</i></h2>
-              <button>Ver nuestro menú →</button>
-              <div className="conchas"><span>✦</span><span>✤</span><span>✦</span></div>
+            <div className="browser-body tire-site">
+              <div className="mini-nav"><strong>Llantas Fiesta</strong><span>Llantas &nbsp; Servicios &nbsp; Visítanos</span></div>
+              <p>PRECIOS JUSTOS · SERVICIO RÁPIDO</p>
+              <h2>Rueda seguro.<br /><i>Llega más lejos.</i></h2>
+              <button>Ver ofertas →</button>
+              <div className="tire-confetti" aria-hidden="true"><span>◆</span><span>✦</span><span>●</span><span>◆</span></div>
+              <div className="tire-visual" aria-hidden="true"><Disc3 /><span>OFERTAS<br />DE TEMPORADA</span></div>
             </div>
           </div>
           <div className="floating-note"><Star size={16} fill="currentColor" /> Hecho para tu comunidad</div>
